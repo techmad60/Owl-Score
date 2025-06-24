@@ -9,8 +9,8 @@ import Link from "next/link";
 const splashData = [
   {
     image: "/images/logo.svg",
-    title: "OWLSCORE!",
-    highlight: "SCORE!",
+    title: "OwlScore!",
+    highlight: "Score!",
   },
   {
     image: "/images/splash1.svg",
@@ -50,7 +50,7 @@ export default function Home() {
     <div className="relative bg-background min-h-screen p-4 sm:px-8 md:p-12 overflow-hidden">
       {/* Skip / Finish Button */}
       <Link
-        href="/main"
+        href="/welcome"
         className="flex justify-end items-center gap-2 text-primary font-sans cursor-pointer duration-150 hover:opacity-80 border-none outline-none w-fit self-end ml-auto"
       >
         {activeIndex === splashData.length - 1 ? "Finish" : "Skip"}{" "}
