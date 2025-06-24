@@ -1,103 +1,97 @@
-import Image from "next/image";
+"use client";
+import { useState, useEffect } from "react";
+import { FaArrowRight } from "react-icons/fa";
+import { FaPlay } from "react-icons/fa6";
+import { AnimatePresence } from "framer-motion";
+import SplashSlide from "@/components/SplashSlide";
+import Link from "next/link";
+
+const splashData = [
+  {
+    image: "/images/logo.svg",
+    title: "OWLSCORE!",
+    highlight: "SCORE!",
+  },
+  {
+    image: "/images/splash1.svg",
+    description: "Your GPA, Delivered with a Hoot!",
+    highlight: "Hoot!",
+  },
+  {
+    image: "/images/splash2.svg",
+    description: "Calculate Smarter. Study Wiser. Hoot Louder.",
+    highlight: "Smarter",
+  },
+];
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [activeIndex, setActiveIndex] = useState(0);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+  const handleSwipe = (dir: number) => {
+    if (dir === -1 && activeIndex > 0) {
+      setActiveIndex((prev) => prev - 1);
+    } else if (dir === 1 && activeIndex < splashData.length - 1) {
+      setActiveIndex((prev) => prev + 1);
+    }
+  };
+
+  const current = splashData[activeIndex];
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") handleSwipe(1);
+      if (e.key === "ArrowLeft") handleSwipe(-1);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [activeIndex]);
+
+  return (
+    <div className="relative bg-background min-h-screen p-4 sm:px-8 md:p-12 overflow-hidden">
+      {/* Skip / Finish Button */}
+      <Link
+        href="/main"
+        className="flex justify-end items-center gap-2 text-primary font-sans cursor-pointer duration-150 hover:opacity-80 border-none outline-none w-fit self-end ml-auto"
+      >
+        {activeIndex === splashData.length - 1 ? "Finish" : "Skip"}{" "}
+        <FaArrowRight />
+      </Link>
+
+      {/* Animated Slide */}
+      <AnimatePresence mode="wait" initial={false}>
+        <SplashSlide
+          key={activeIndex}
+          image={current.image}
+          title={current.title}
+          description={current.description}
+          highlight={current.highlight}
+          isFirst={activeIndex === 0}
+          onSwipe={handleSwipe}
+        />
+      </AnimatePresence>
+
+      {/* Carousel & Play Button */}
+      <div className="absolute bottom-18 left-0 right-0 flex justify-center gap-2 items-center">
+        {splashData.map((_, i) => (
+          <div
+            key={i}
+            role="button"
+            aria-label={`Go to slide ${i + 1}`}
+            onClick={() => setActiveIndex(i)}
+            className={`w-2 h-2 rounded-full cursor-pointer transition-all duration-300 ${
+              i === activeIndex ? "bg-primary scale-110" : "bg-secondary"
+            }`}
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
+        ))}
+        {activeIndex < splashData.length - 1 && (
+          <FaPlay
+            onClick={() => handleSwipe(1)}
+            role="button"
+            aria-label="Next slide"
+            className="text-primary duration-100 hover:text-primary cursor-pointer"
           />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        )}
+      </div>
     </div>
   );
 }
