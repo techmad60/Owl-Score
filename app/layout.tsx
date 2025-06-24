@@ -25,6 +25,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+       <head>
+        <link rel="icon" href="/images/logo.svg" type="image/svg" />
+      </head>
       <body
         className={`${geistSans.variable} ${irishGrover.variable} antialiased`}
       >
