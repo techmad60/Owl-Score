@@ -35,6 +35,12 @@ export default function Home() {
     }
   };
 
+  const handleClick = () => {
+  const audio = new Audio("/audio/welcome-hoot.mp3");
+  audio.play();
+};
+
+
   const current = splashData[activeIndex];
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -51,6 +57,7 @@ export default function Home() {
       {/* Skip / Finish Button */}
       <Link
         href="/welcome"
+         onClick={handleClick}
         className="flex justify-end items-center gap-2 text-primary font-sans cursor-pointer duration-150 hover:opacity-80 border-none outline-none w-fit self-end ml-auto"
       >
         {activeIndex === splashData.length - 1 ? "Finish" : "Skip"}{" "}

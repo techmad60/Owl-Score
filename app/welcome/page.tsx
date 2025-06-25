@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const sentence = {
   hidden: { opacity: 1 },
@@ -19,6 +20,7 @@ const word = {
 
 export default function WelcomePage() {
   const titleWords = ["Welcome", "to", "OwlScore!"];
+
   return (
     <div className="flex justify-center min-h-screen bg-background p-4 font-irish">
       <motion.div
@@ -71,13 +73,15 @@ export default function WelcomePage() {
             );
           })}
         </motion.h1>
-        <motion.button
-          className="bg-primary text-background px-6 py-3 rounded-sm mt-16 text-lg font-semibold hover:bg-primary/90 transition-all duration-200 cursor-pointer w-[93px] h-[46px] shadow-[0_4px_0_0_rgba(0,0,0,0.2)] active:translate-y-0.5 active:shadow-none"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.97 }}
-        >
-          Start!
-        </motion.button>
+        <Link href="/calculator">
+          <motion.button
+            className="bg-primary text-background px-6 py-3 rounded-sm mt-16 text-lg font-semibold hover:bg-primary/90 transition-all duration-200 cursor-pointer w-[93px] h-[46px] shadow-[0_4px_0_0_rgba(0,0,0,0.2)] active:translate-y-0.5 active:shadow-none"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.97 }}
+          >
+            Start!
+          </motion.button>
+        </Link>
       </motion.div>
     </div>
   );

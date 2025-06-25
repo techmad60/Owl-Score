@@ -1,0 +1,21 @@
+{
+  "name": "OwlScore GPA Calculator",
+  "short_name": "OwlScore",
+  "description": "Crush your GPA goals. Calculate fast. Download easy. OwlScore's got your back.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#13291E",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
