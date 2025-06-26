@@ -75,6 +75,8 @@ export default function GPAHome() {
       units += course.unit;
     }
 
+    const audio = new Audio("/audio/generate-hoot.mp3");
+    audio.play();
     setTotalPoints(points);
     setTotalUnits(units);
     setGpa(units ? (points / units).toFixed(2) : "0.00");
@@ -96,6 +98,7 @@ export default function GPAHome() {
       link.click();
     }
   };
+
 
   return (
     <div className="relative flex flex-col justify-start items-center min-h-screen bg-background p-4 font-irish">
@@ -214,7 +217,7 @@ export default function GPAHome() {
                   GPA : <span className=" text-primary">{gpa}</span>
                 </p>
               </div>
-              <RandomTip/>
+              <RandomTip />
               <div className="flex gap-2 justify-center mt-12 cursor-pointer">
                 <RxDownload className="text-white" onClick={downloadImage} />
               </div>
